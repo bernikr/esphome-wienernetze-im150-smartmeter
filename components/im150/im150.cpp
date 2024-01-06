@@ -65,34 +65,51 @@ namespace esphome {
             this->ctraes128.decrypt(message, message, 92);
             ESP_LOGV(TAG, "decrypted data: %s", format_hex_pretty(std::vector<uint8_t>(message, message+92)).c_str());
 
+            uint32_t active_energy_pos_raw    = bytes_to_int(message, 53+5*0, 4);
+            uint32_t active_energy_neg_raw    = bytes_to_int(message, 53+5*1, 4);
+            uint32_t reactive_energy_pos_raw  = bytes_to_int(message, 53+5*2, 4);
+            uint32_t reactive_energy_neg_raw  = bytes_to_int(message, 53+5*3, 4);
+
             // use modulo 1000kwh for the energy sensors, because esphome sensors are only 32bit floats
             // values larger than that would suffer from precision errors
             // because the sensors are defined as total_increasing, home assistant will still correctly display consuption
-            float active_energy_pos    = (bytes_to_int(message, 53+5*0, 4)%1000000)/1000.0;
-            float active_energy_neg    = (bytes_to_int(message, 53+5*1, 4)%1000000)/1000.0;
-            float reactive_energy_pos  = (bytes_to_int(message, 53+5*2, 4)%1000000)/1000.0;
-            float reactive_energy_neg  = (bytes_to_int(message, 53+5*3, 4)%1000000)/1000.0;
+            float active_energy_pos    = (active_energy_pos_raw%1000000)/1000.0;
+            float active_energy_neg    = (active_energy_neg_raw%1000000)/1000.0;
+            float reactive_energy_pos  = (reactive_energy_pos_raw%1000000)/1000.0;
+            float reactive_energy_neg  = (reactive_energy_neg_raw%1000000)/1000.0;
             float active_power_pos     = bytes_to_int(message, 53+5*4, 4);
             float active_power_neg     = bytes_to_int(message, 53+5*5, 4);
             float reactive_power_pos   = bytes_to_int(message, 53+5*6, 4);
             float reactive_power_neg   = bytes_to_int(message, 53+5*7, 4);
 
-            if(this->active_energy_pos != NULL && this->active_energy_pos->state != active_energy_pos)
+            if(this->active_energy_pos != nullptr && this->active_energy_pos->state != active_energy_pos)
                 this->active_energy_pos->publish_state(active_energy_pos);
-            if(this->active_energy_neg != NULL && this->active_energy_neg->state != active_energy_neg)
+            if(this->active_energy_neg != nullptr && this->active_energy_neg->state != active_energy_neg)
                 this->active_energy_neg->publish_state(active_energy_neg);
-            if(this->reactive_energy_pos != NULL && this->reactive_energy_pos->state != reactive_energy_pos)
+            if(this->reactive_energy_pos != nullptr && this->reactive_energy_pos->state != reactive_energy_pos)
                 this->reactive_energy_pos->publish_state(reactive_energy_pos);
-            if(this->reactive_energy_neg != NULL && this->reactive_energy_neg->state != reactive_energy_neg)
+            if(this->reactive_energy_neg != nullptr && this->reactive_energy_neg->state != reactive_energy_neg)
                 this->reactive_energy_neg->publish_state(reactive_energy_neg);
-            if(this->active_power_pos != NULL && this->active_power_pos->state != active_power_pos)
+            if(this->active_power_pos != nullptr && this->active_power_pos->state != active_power_pos)
                 this->active_power_pos->publish_state(active_power_pos);
-            if(this->active_power_neg != NULL && this->active_power_neg->state != active_power_neg)
+            if(this->active_power_neg != nullptr && this->active_power_neg->state != active_power_neg)
                 this->active_power_neg->publish_state(active_power_neg);
-            if(this->reactive_power_pos != NULL && this->reactive_power_pos->state != reactive_power_pos)
+            if(this->reactive_power_pos != nullptr && this->reactive_power_pos->state != reactive_power_pos)
                 this->reactive_power_pos->publish_state(reactive_power_pos);
-            if(this->reactive_power_neg != NULL && this->reactive_power_neg->state != reactive_power_neg)
+            if(this->reactive_power_neg != nullptr && this->reactive_power_neg->state != reactive_power_neg)
                 this->reactive_power_neg->publish_state(reactive_power_neg);
+            
+
+            char buffer[16];
+
+            if(this->active_energy_pos_raw != nullptr)
+                this->active_energy_pos_raw->publish_state(itoa(active_energy_pos_raw, buffer, 10));
+            if(this->active_energy_neg_raw != nullptr)
+                this->active_energy_neg_raw->publish_state(itoa(active_energy_neg_raw, buffer, 10));
+            if(this->reactive_energy_pos_raw != nullptr)
+                this->reactive_energy_pos_raw->publish_state(itoa(reactive_energy_pos_raw, buffer, 10));
+            if(this->reactive_energy_neg_raw != nullptr)
+                this->reactive_energy_neg_raw->publish_state(itoa(reactive_energy_neg_raw, buffer, 10));
         }
     }
 }

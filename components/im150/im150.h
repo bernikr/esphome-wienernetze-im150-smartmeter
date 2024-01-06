@@ -2,6 +2,7 @@
 
 #include "esphome/components/uart/uart.h"
 #include "esphome/components/sensor/sensor.h"
+#include "esphome/components/text_sensor/text_sensor.h"
 #include "esphome/core/component.h"
 
 #include <FastCRC.h>
@@ -12,6 +13,10 @@
 #define IM150_SENSOR(name) \
 protected: sensor::Sensor *name{}; \
 public: void set_##name(sensor::Sensor *name){this->name = name;}
+
+#define IM150_TEXT_SENSOR(name) \
+protected: text_sensor::TextSensor *name{}; \
+public: void set_##name(text_sensor::TextSensor *name){this->name = name;}
 
 
 namespace esphome {
@@ -28,6 +33,11 @@ namespace esphome {
             IM150_SENSOR(active_power_neg)
             IM150_SENSOR(reactive_power_pos)
             IM150_SENSOR(reactive_power_neg)
+
+            IM150_TEXT_SENSOR(active_energy_pos_raw)
+            IM150_TEXT_SENSOR(active_energy_neg_raw)
+            IM150_TEXT_SENSOR(reactive_energy_pos_raw)
+            IM150_TEXT_SENSOR(reactive_energy_neg_raw)
 
             public:
                 void setup() override;
