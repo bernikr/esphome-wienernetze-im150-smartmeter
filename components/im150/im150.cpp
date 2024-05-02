@@ -48,7 +48,7 @@ namespace esphome {
             }
 
             // CRC Check
-            int crc = this->CRC16.x25(msg.data() + 1, 121);
+            int crc = this->CRC16.x25(msg.data() + 1, datalen-4);
             int expected_crc = msg[datalen-2] * 256 + msg[datalen-3];
             if(crc != expected_crc) {
                 ESP_LOGD(TAG, "crc mismatch: calculated %04x, expected %04x", crc, expected_crc);
