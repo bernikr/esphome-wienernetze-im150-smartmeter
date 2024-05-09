@@ -2,8 +2,9 @@
 
 namespace esphome {
     namespace im150 {
-        void IM150::setup() {
-            ESP_LOGD(TAG, "IM150 smart meter component v%s started", IM150_VERSION);
+        void IM150::dump_config() {
+            ESP_LOGCONFIG(TAG, "IM150 Smartmeter:");
+            ESP_LOGCONFIG(TAG, "  version: %s", IM150_VERSION);
         }
         
         void IM150::loop() {
