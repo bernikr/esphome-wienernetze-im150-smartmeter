@@ -92,7 +92,7 @@ namespace esphome {
 
             // use modulo 1000kwh for the energy sensors, because esphome sensors are only 32bit floats
             // values larger than that would suffer from precision errors
-            // because the sensors are defined as total_increasing, home assistant will still correctly display consuption
+            // because the sensors are defined as total_increasing, home assistant will still correctly display consumption
             float active_energy_pos    = (active_energy_pos_raw%1000000)/1000.0;
             float active_energy_neg    = (active_energy_neg_raw%1000000)/1000.0;
             float reactive_energy_pos  = (reactive_energy_pos_raw%1000000)/1000.0;
@@ -119,17 +119,27 @@ namespace esphome {
             if(this->reactive_power_neg != nullptr && this->reactive_power_neg->state != reactive_power_neg)
                 this->reactive_power_neg->publish_state(reactive_power_neg);
             
-
             char buffer[16];
-
-            if(this->active_energy_pos_raw != nullptr)
-                this->active_energy_pos_raw->publish_state(itoa(active_energy_pos_raw, buffer, 10));
-            if(this->active_energy_neg_raw != nullptr)
-                this->active_energy_neg_raw->publish_state(itoa(active_energy_neg_raw, buffer, 10));
-            if(this->reactive_energy_pos_raw != nullptr)
-                this->reactive_energy_pos_raw->publish_state(itoa(reactive_energy_pos_raw, buffer, 10));
-            if(this->reactive_energy_neg_raw != nullptr)
-                this->reactive_energy_neg_raw->publish_state(itoa(reactive_energy_neg_raw, buffer, 10));
+            if(this->active_energy_pos_raw != nullptr) {
+                itoa(active_energy_pos_raw, buffer, 10);
+                if(this->active_energy_pos_raw->state != buffer)
+                    this->active_energy_pos_raw->publish_state(buffer);
+            }
+            if(this->active_energy_neg_raw != nullptr) {
+                itoa(active_energy_neg_raw, buffer, 10);
+                if(this->active_energy_neg_raw->state != buffer)
+                    this->active_energy_neg_raw->publish_state(buffer);
+            }
+            if(this->reactive_energy_pos_raw != nullptr) {
+                itoa(reactive_energy_pos_raw, buffer, 10);
+                if(this->reactive_energy_pos_raw->state != buffer)
+                    this->reactive_energy_pos_raw->publish_state(buffer);
+            }
+            if(this->reactive_energy_neg_raw != nullptr) {
+                itoa(reactive_energy_neg_raw, buffer, 10);
+                if(this->reactive_energy_neg_raw->state != buffer)
+                    this->reactive_energy_neg_raw->publish_state(buffer);
+            }
         }
     }
 }
