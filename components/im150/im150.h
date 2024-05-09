@@ -21,7 +21,7 @@ public: void set_##name(text_sensor::TextSensor *name){this->name = name;}
 
 namespace esphome {
     namespace im150 {
-        static const char* IM150_VERSION = "0.0.1a";
+        static const char* IM150_VERSION = "0.1.0";
         static const char* TAG = "im150";
 
         class IM150 : public Component, public uart::UARTDevice {
