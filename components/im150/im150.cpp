@@ -34,24 +34,32 @@ namespace esphome {
         void IM150::handle_message(std::vector<uint8_t> msg) {
             uint8_t datalen = msg.size();
 
-            if(datalen != 125) {
-                ESP_LOGD(TAG, "wrong msg length: %i, expected 125. Functunality is untested with this smartmeter.", msg.size());
+            if(msg[0] != 0x7e || msg[1] != 0xA0) {
+                ESP_LOGW(TAG, "wrong opening bytes: %02x %02x, expected 7e a0", msg[0], msg[1]);
+                return;
             }
 
-            if(msg[0] != 0x7e) {
-                ESP_LOGD(TAG, "wrong opening byte: %02x, expected 7e", msg[0]);
+            if(datalen != msg[2]+2) {
+                ESP_LOGW(TAG, "wrong msg length: %i, expected %i", datalen, msg[2]+2);
                 return;
             }
+
             if(msg[datalen-1] != 0x7e) {
-                ESP_LOGD(TAG, "wrong closing byte: %02x, expected 7e", msg[124]);
+                ESP_LOGW(TAG, "wrong closing byte: %02x, expected 7e", msg[124]);
                 return;
+            }
+
+            if(memcmp(&msg[16], "SMSfp", 5)!=0){
+                ESP_LOGW(TAG, "Unknown smartmeter model, support is untested.");
+                ESP_LOGW(TAG, "Please open a GitHub issue:");
+                ESP_LOGW(TAG, "https://github.com/bernikr/esphome-wienernetze-im150-smartmeter/issues/new");
             }
 
             // CRC Check
             int crc = this->CRC16.x25(msg.data() + 1, datalen-4);
             int expected_crc = msg[datalen-2] * 256 + msg[datalen-3];
             if(crc != expected_crc) {
-                ESP_LOGD(TAG, "crc mismatch: calculated %04x, expected %04x", crc, expected_crc);
+                ESP_LOGW(TAG, "crc mismatch: calculated %04x, expected %04x", crc, expected_crc);
                 return;
             }
             
@@ -67,6 +75,14 @@ namespace esphome {
             this->ctraes128.setIV(nonce, 16);
             this->ctraes128.decrypt(message, message, msglen);
             ESP_LOGV(TAG, "decrypted data: %s", format_hex_pretty(std::vector<uint8_t>(message, message+msglen)).c_str());
+
+            if(message[0] != 0x0f || message[msglen-5] != 0x06 || message[msglen-5*2] != 0x06
+                || message[msglen-5*3] != 0x06 || message[msglen-5*4] != 0x06
+                || message[msglen-5*5] != 0x06 || message[msglen-5*6] != 0x06
+                || message[msglen-5*7] != 0x06 || message[msglen-5*8] != 0x06){
+                ESP_LOGW(TAG, "decryption error, please check if your key is correct");
+                return;
+            }
 
             uint32_t active_energy_pos_raw    = bytes_to_int(message, msglen-4-5*7, 4);
             uint32_t active_energy_neg_raw    = bytes_to_int(message, msglen-4-5*6, 4);

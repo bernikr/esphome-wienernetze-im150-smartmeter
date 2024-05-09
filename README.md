@@ -1,6 +1,22 @@
-# esphome-wienernetze-im150-smartmeter
+# ESPHome Smartmeter Reader for Wiener Netze
 
-This is a custom component for ESPHome to integrate a Siemens IM150 Smartmeter provided by Wiener Netze into Home Assistant via the infrared "Kundenschnittstelle". It gives power and energy readings, both positive and negative for active as well as reactive power.
+This is a custom component for ESPHome to integrate a smartmeter provided by Wiener Netze into Home Assistant via the infrared "Kundenschnittstelle". It gives power and energy readings, both positive and negative for active as well as reactive power.
+
+## Device Support
+The project is only named after the IM150 because that was the first smartmeter that was suppported.
+Below is an overview of currently supported devices:
+
+**Supported and tested**
+- IM150
+- IM151
+
+**Possibly supported but untested**
+- IM350
+
+**Currently unsupported**
+- AM550
+
+If you have one of the untested or unsupported devices (or any other devices supplied by Wiener Netze) and are willing to help me test this component, please open an [issue](https://github.com/bernikr/esphome-wienernetze-im150-smartmeter/issues/new).
 
 ## Installation and usage
 
@@ -56,14 +72,14 @@ text_sensor:
 For every sensor normal esphome sensor configs can be used to set name, id, icon, etc. or add filters and so on.
 
 **Warning**  
-All energy sensors roll over every 1000 kWh and start again from 0 due to precicion issues of esphome.
-(Sensors are always 32bit floats, if the meter is t0o high the sensor cant update every Wh anymore.)  
+All energy sensors roll over every 1000 kWh and start again from 0 due to precision issues of ESPHome.
+(Sensors are always 32bit floats. If the meter is too high the sensor cant update every Wh anymore.)  
 This is not a problem when using the `active_energy_pos` sensor for the energy dashboard in Home Assistant as it is set to `total_increasing` and therefore Home Assistant knows that a drop from 1000 to 0 is a reset of the counter and not a negataive consumption of 1000kWh.
 
-As an alternative you can use the text_sensors which always result in the full counter of the meter (in Wh not kWh) but using them further would require a bit post processing (probably a template sensor) in Home Assistant in order to use them as propper numeric sensors.
+As an alternative you can use the text_sensors which always result in the full counter of the meter (in Wh not kWh) but using them further would require a bit post processing (probably a template sensor) in Home Assistant in order to use them as proper numeric sensors.
 
 ## Tested Hardware
-This component shoud work on all ESP8266 and ESP32 microcontrollers with and IR read-head attached to them. I used a ready made read-write head with an ESP01s built in that I got for 30€ on [ebay](https://www.ebay.de/itm/275501110235).
+This component shoud work on all ESP8266 and ESP32 microcontrollers with an IR read-head attached to them. I used a ready made read-write head with an ESP01s built in that I got for 30€ on [ebay](https://www.ebay.de/itm/296067484432).
 
 ## Thanks
 The following resources were much help in the development of this component:
@@ -71,3 +87,6 @@ The following resources were much help in the development of this component:
 - https://github.com/aburgr/smartmeter-reader
 - https://github.com/DomiStyle/esphome-dlms-meter
 - https://www.lteforum.at/mobilfunk/wiener-netze-smart-meter-auslesen.16222/
+- https://gist.github.com/pocki80/941fa090a8d6269a9b3b68c195f8750f
+
+Thanks to @cyranosaurus for helping me test the code on the IM151.
