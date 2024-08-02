@@ -9,9 +9,10 @@ Below is an overview of currently supported devices:
 **Supported and tested**
 - IM150
 - IM151
+- IM350
 
 **Possibly supported but untested**
-- IM350
+
 
 **Currently unsupported**
 - AM550
