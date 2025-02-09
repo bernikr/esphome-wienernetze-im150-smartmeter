@@ -10,6 +10,7 @@ Below is an overview of currently supported devices:
 - IM150
 - IM151
 - IM350
+- IM351
 
 **Possibly supported but untested**
 
