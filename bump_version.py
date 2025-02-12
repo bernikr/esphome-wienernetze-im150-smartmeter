@@ -74,6 +74,10 @@ if has_wanings:
 res = input("Do you want to commit the changes? [y/N] ")
 if res.lower() in {"y", "yes"}:
     repo.git.add([filename for filename, _, _ in VERSION_OCCURANCES])
-    repo.git.commit("-m", f"Bump version to v{next_version}")
-    repo.create_tag(f"v{next_version}")
+    repo.git.commit("-m", f"Bump version to {next_version}")
+    repo.create_tag(f"v{next_version}", message=f"Bump version to {next_version}")
     print("changes committed and created tag")
+    res = input("Do you want to push the changes? [y/N] ")
+    if res.lower() in {"y", "yes"}:
+        repo.git.push(follow_tags=True)
+        print("changes pushed")
