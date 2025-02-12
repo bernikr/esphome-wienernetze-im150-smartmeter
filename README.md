@@ -15,10 +15,11 @@ Below is an overview of currently supported devices:
 **Possibly supported but untested**
 - Landis + Gyr E450
 - Landis + Gyr E570
+- Iskraemeco AM550-TD0
+- Iskraemeco AM550-ED0
 
 **Currently unsupported**
-- ISKRAEMECO AM550-TD0
-- ISKRAEMECO AM550-ED0
+- Any other smart meter you might have
 
 If you have one of the untested or unsupported devices (or any other devices supplied by Wiener Netze) and are willing to help me test this component, please open an [issue](https://github.com/bernikr/esphome-wienernetze-im150-smartmeter/issues/new).
 

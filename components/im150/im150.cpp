@@ -69,8 +69,16 @@ namespace esphome
             }
             else if (memcmp(&msg[14], "LGZgs", 5) == 0)
             {
-                // Landis+Gyr E450
+                // Landis+Gyr E450, E570
                 offset = -2;
+            }
+            else if (memcmp(&msg[14], "ISKhu", 5) == 0)
+            {
+                // Iskraemeco AM550-TD0, AM550-ED0
+                offset = -2;
+                ESP_LOGW(TAG, "Iskraemeco smartmeter detected, support is untested.");
+                ESP_LOGW(TAG, "Please open a GitHub issue:");
+                ESP_LOGW(TAG, "https://github.com/bernikr/esphome-wienernetze-im150-smartmeter/issues/new");
             }
             else
             {
