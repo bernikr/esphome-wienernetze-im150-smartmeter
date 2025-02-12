@@ -5,7 +5,7 @@ from git import Repo
 from semver import Version
 
 VERSION_OCCURANCES = [
-    ("README.md", r"(source: github://bernikr/esphome-wienernetze-im150-smartmeter@)(\S+)()", 1),
+    ("README.md", r"(source: github://bernikr/esphome-wienernetze-im150-smartmeter@v)(\S+)()", 1),
     ("components/im150/im150.h", r'(static const char \*IM150_VERSION = ")(\S+)(";)', 1),
     ("pyproject.toml", r'(version = ")(\S+)(")', 1),
 ]
