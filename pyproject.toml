@@ -1,6 +1,6 @@
 [project]
 name = "esphome-wienernetze-im150-smartmeter"
-version = "0.1.3-beta.1"
+version = "0.1.3-beta.2"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
