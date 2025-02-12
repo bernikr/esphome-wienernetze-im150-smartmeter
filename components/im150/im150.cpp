@@ -62,7 +62,17 @@ namespace esphome
                 return;
             }
 
-            if (memcmp(&msg[16], "SMSfp", 5) != 0)
+            int offset = 0;
+            if (memcmp(&msg[16], "SMSfp", 5) == 0)
+            {
+                // Siemens IM150, IM151, IM350, IM351
+            }
+            else if (memcmp(&msg[14], "LGZgs", 5) == 0)
+            {
+                // Landis+Gyr E450
+                offset = -2;
+            }
+            else
             {
                 ESP_LOGW(TAG, "Unknown smartmeter model, support is untested.");
                 ESP_LOGW(TAG, "Please open a GitHub issue:");
@@ -79,12 +89,12 @@ namespace esphome
             }
 
             // Decrypt
-            uint8_t msglen = datalen - 33;
+            uint8_t msglen = datalen - 33 + offset;
             uint8_t message[msglen] = {0};
             memcpy(message, msg.data() + 30, msglen);
             uint8_t nonce[16] = {0};
-            memcpy(nonce, msg.data() + 16, 8);
-            memcpy(nonce + 8, msg.data() + 26, 4);
+            memcpy(nonce, msg.data() + 16 + offset, 8);
+            memcpy(nonce + 8, msg.data() + 26 + offset, 4);
             nonce[15] = 0x02;
             this->ctraes128.setKey(this->key, 16);
             this->ctraes128.setIV(nonce, 16);

@@ -7,16 +7,18 @@ The project is only named after the IM150 because that was the first smartmeter 
 Below is an overview of currently supported devices:
 
 **Supported and tested**
-- IM150
-- IM151
-- IM350
-- IM351
+- Siemens IM150
+- Siemens IM151
+- Siemens IM350
+- Siemens IM351
 
 **Possibly supported but untested**
-
+- Landis + Gyr E450
+- Landis + Gyr E570
 
 **Currently unsupported**
-- AM550
+- ISKRAEMECO AM550-TD0
+- ISKRAEMECO AM550-ED0
 
 If you have one of the untested or unsupported devices (or any other devices supplied by Wiener Netze) and are willing to help me test this component, please open an [issue](https://github.com/bernikr/esphome-wienernetze-im150-smartmeter/issues/new).
 
