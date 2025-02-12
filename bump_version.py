@@ -5,7 +5,6 @@ from git import GitCommandError, Repo
 from semver import Version
 
 MAIN_BRANCH = "main"
-DEV_BRANCH = "dev"
 
 VERSION_OCCURANCES = [
     ("README.md", r"(source: github://bernikr/esphome-wienernetze-im150-smartmeter@v)(\S+)()", 1),
@@ -79,13 +78,14 @@ if res.lower() in {"y", "yes"}:
     repo.create_tag(f"v{next_version}", message=f"Bump version to {next_version}")
     print("changes committed and created tag")
     if not next_version.prerelease:
+        cur_branch = repo.active_branch.name
         repo.git.checkout(MAIN_BRANCH)
         try:
-            repo.git.merge(DEV_BRANCH, ff_only=True)
+            repo.git.merge(cur_branch, ff_only=True)
         except GitCommandError:
-            print(f"WARNING: merge into {MAIN_BRANCH} failed, please merge manually")
+            print(f"WARNING: merge {cur_branch} into {MAIN_BRANCH} failed, please merge manually")
         finally:
-            repo.git.checkout(DEV_BRANCH)
+            repo.git.checkout(cur_branch)
     res = input("Do you want to push the changes? [y/N] ")
     if res.lower() in {"y", "yes"}:
         repo.git.push(follow_tags=True)
