@@ -1,18 +1,20 @@
+# ruff: noqa: ANN001, ANN201
+
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import text_sensor
-from esphome.const import *
-from . import IM150_COMPONENT_SCHEMA, CONF_IM150_ID
+
+from . import CONF_IM150_ID, IM150_COMPONENT_SCHEMA
 
 T_SENSORS = [
     "active_energy_pos",
     "active_energy_neg",
     "reactive_energy_pos",
-    "reactive_energy_neg"
+    "reactive_energy_neg",
 ]
 
 CONFIG_SCHEMA = IM150_COMPONENT_SCHEMA.extend(
-    {cv.Optional(t): text_sensor.text_sensor_schema() for t in T_SENSORS}
+    {cv.Optional(t): text_sensor.text_sensor_schema() for t in T_SENSORS},
 )
 
 

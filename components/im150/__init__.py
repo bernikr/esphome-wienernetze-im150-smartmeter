@@ -1,7 +1,9 @@
+# ruff: noqa: ANN001, ANN201
+
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.const import *
 from esphome.components import uart
+from esphome.const import CONF_ID, CONF_RAW_DATA_ID
 
 DEPENDENCIES = ["uart"]
 CODEOWNERS = ["@bernikr"]
@@ -12,31 +14,33 @@ CONF_IM150_ID = "im150_id"
 CONG_IM150_KEY = "key"
 
 pipsolar_ns = cg.esphome_ns.namespace("im150")
-im150Component = pipsolar_ns.class_("IM150", cg.Component)
+im150component = pipsolar_ns.class_("IM150", cg.Component)
 
 IM150_COMPONENT_SCHEMA = cv.Schema(
     {
-        cv.GenerateID(CONF_IM150_ID): cv.use_id(im150Component),
-    }
+        cv.GenerateID(CONF_IM150_ID): cv.use_id(im150component),
+    },
 )
+
 
 def validate_key(value):
     value = cv.string(value).replace(" ", "").upper()
-    if len(value) != 32 or any(c not in "0123456789ABCDEF" for c in value):
-        raise cv.Invalid(
-            "Key must be 16 bytes in Hex"
-        )
-    value = [int(value[i*2:i*2+2], 16) for i in range(16)]
-    return value
+    if len(value) != 32 or any(c not in "0123456789ABCDEF" for c in value):  # noqa: PLR2004
+        msg = "Key must be 16 bytes in Hex"
+        raise cv.Invalid(msg)
+    return [int(value[i * 2 : i * 2 + 2], 16) for i in range(16)]
+
 
 CONFIG_SCHEMA = cv.All(
-    cv.Schema({
-        cv.GenerateID(): cv.declare_id(im150Component),
-        cv.Required(CONG_IM150_KEY): validate_key,
-        cv.GenerateID(CONF_RAW_DATA_ID): cv.declare_id(cg.uint8),
-        })
-    .extend(uart.UART_DEVICE_SCHEMA)
+    cv.Schema(
+        {
+            cv.GenerateID(): cv.declare_id(im150component),
+            cv.Required(CONG_IM150_KEY): validate_key,
+            cv.GenerateID(CONF_RAW_DATA_ID): cv.declare_id(cg.uint8),
+        },
+    ).extend(uart.UART_DEVICE_SCHEMA),
 )
+
 
 def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])

@@ -1,0 +1,22 @@
+[project]
+name = "esphome-wienernetze-im150-smartmeter"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["esphome>=2024.12.4"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+preview = true
+select = ["ALL"]
+ignore = [
+    "D",   # pydocstyle
+    "CPY", # flake8-copyright
+    "T20", # flake8-print
+]
+
+[tool.uv]
+dev-dependencies = ["ruff>=0.8.1"]

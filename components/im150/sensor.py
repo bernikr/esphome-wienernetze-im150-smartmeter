@@ -1,8 +1,18 @@
+# ruff: noqa: ANN001, ANN201
+
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
-from esphome.const import *
-from . import IM150_COMPONENT_SCHEMA, CONF_IM150_ID
+from esphome.const import (
+    DEVICE_CLASS_ENERGY,
+    DEVICE_CLASS_POWER,
+    STATE_CLASS_MEASUREMENT,
+    STATE_CLASS_TOTAL_INCREASING,
+    UNIT_KILOWATT_HOURS,
+    UNIT_WATT,
+)
+
+from . import CONF_IM150_ID, IM150_COMPONENT_SCHEMA
 
 TYPES = {
     "active_energy_pos": sensor.sensor_schema(
@@ -55,16 +65,14 @@ TYPES = {
     ),
 }
 
-CONFIG_SCHEMA = IM150_COMPONENT_SCHEMA.extend(
-    {cv.Optional(type): schema for type, schema in TYPES.items()}
-)
+CONFIG_SCHEMA = IM150_COMPONENT_SCHEMA.extend({cv.Optional(t): schema for t, schema in TYPES.items()})
 
 
 async def to_code(config):
     paren = await cg.get_variable(config[CONF_IM150_ID])
 
-    for type, _ in TYPES.items():
-        if type in config:
-            conf = config[type]
+    for t in TYPES:
+        if t in config:
+            conf = config[t]
             sens = await sensor.new_sensor(conf)
-            cg.add(getattr(paren, f"set_{type}")(sens))
+            cg.add(getattr(paren, f"set_{t}")(sens))
