@@ -28,7 +28,7 @@ namespace esphome
 {
     namespace im150
     {
-        static const char *IM150_VERSION = "0.1.3-beta.2";
+        static const char *IM150_VERSION = "0.1.3-beta.3";
         static const char *TAG = "im150";
 
         class IM150 : public Component, public uart::UARTDevice
