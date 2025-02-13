@@ -7,7 +7,7 @@ namespace esphome
         void WienerNetze::dump_config()
         {
             ESP_LOGCONFIG(TAG, "WienerNetze Smartmeter:");
-            ESP_LOGCONFIG(TAG, "  version: %s", WienerNetze_VERSION);
+            ESP_LOGCONFIG(TAG, "  version: %s", WIENERNETZE_VERSION);
         }
 
         void WienerNetze::loop()
