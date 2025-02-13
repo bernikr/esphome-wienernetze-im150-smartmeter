@@ -83,7 +83,7 @@ namespace esphome
             else
             {
                 ESP_LOGW(TAG, "Unknown smartmeter model, support is untested.");
-                ESP_LOGW(TAG, "Please open a GitHub issue and include the following identifier: %s", format_hex_pretty(std::vector<uint8_t>(&msg[14], &msg[14 + 7])).c_str());
+                ESP_LOGW(TAG, "Please open a GitHub issue and include the model of your smartmeter and the following data: %s", format_hex_pretty(std::vector<uint8_t>(&msg[14], &msg[14 + 7])).c_str());
                 ESP_LOGW(TAG, "https://github.com/bernikr/esphome-wienernetze-smartmeter/issues/new");
             }
 
