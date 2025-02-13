@@ -94,4 +94,7 @@ The following resources were much help in the development of this component:
 - https://www.lteforum.at/mobilfunk/wiener-netze-smart-meter-auslesen.16222/
 - https://gist.github.com/pocki80/941fa090a8d6269a9b3b68c195f8750f
 
-Thanks to @cyranosaurus for helping me test the code on the IM151.
+Thanks to the following people for helping test this component on different smartmeters:
+- IM151: @cyranosaurus
+- IM350: @coolduke666
+- IM351: @elpollodiablo
