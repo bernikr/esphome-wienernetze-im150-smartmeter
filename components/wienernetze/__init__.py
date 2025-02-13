@@ -10,15 +10,15 @@ CODEOWNERS = ["@bernikr"]
 AUTO_LOAD = ["text_sensor", "sensor"]
 MULTI_CONF = True
 
-CONF_IM150_ID = "im150_id"
-CONG_IM150_KEY = "key"
+CONF_WIENERNETZE_ID = "wienernetze_id"
+CONG_WIENERNETZE_KEY = "key"
 
-pipsolar_ns = cg.esphome_ns.namespace("im150")
-im150component = pipsolar_ns.class_("IM150", cg.Component)
+wienernetze_ns = cg.esphome_ns.namespace("wienernetze")
+wienernetze_component = wienernetze_ns.class_("WienerNetze", cg.Component)
 
-IM150_COMPONENT_SCHEMA = cv.Schema(
+WIENERNETZE_COMPONENT_SCHEMA = cv.Schema(
     {
-        cv.GenerateID(CONF_IM150_ID): cv.use_id(im150component),
+        cv.GenerateID(CONF_WIENERNETZE_ID): cv.use_id(wienernetze_component),
     },
 )
 
@@ -34,8 +34,8 @@ def validate_key(value):
 CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
-            cv.GenerateID(): cv.declare_id(im150component),
-            cv.Required(CONG_IM150_KEY): validate_key,
+            cv.GenerateID(): cv.declare_id(wienernetze_component),
+            cv.Required(CONG_WIENERNETZE_KEY): validate_key,
             cv.GenerateID(CONF_RAW_DATA_ID): cv.declare_id(cg.uint8),
         },
     ).extend(uart.UART_DEVICE_SCHEMA),
@@ -44,7 +44,7 @@ CONFIG_SCHEMA = cv.All(
 
 def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
-    arr = cg.progmem_array(config[CONF_RAW_DATA_ID], config[CONG_IM150_KEY])
+    arr = cg.progmem_array(config[CONF_RAW_DATA_ID], config[CONG_WIENERNETZE_KEY])
     cg.add(var.set_key(arr))
     yield cg.register_component(var, config)
     yield uart.register_uart_device(var, config)

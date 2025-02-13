@@ -7,8 +7,8 @@ from semver import Version
 MAIN_BRANCH = "main"
 
 VERSION_OCCURANCES = [
-    ("README.md", r"(source: github://bernikr/esphome-wienernetze-im150-smartmeter@v)(\S+)()", 1),
-    ("components/im150/im150.h", r'(static const char \*IM150_VERSION = ")(\S+)(";)', 1),
+    ("README.md", r"(source: github://bernikr/esphome-wienernetze-smartmeter@v)(\S+)()", 1),
+    ("components/wienernetze/wienernetze.h", r'(static const char \*WIENERNETZE_VERSION = ")(\S+)(";)', 1),
     ("pyproject.toml", r'(version = ")(\S+)(")', 1),
 ]
 

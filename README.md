@@ -3,8 +3,6 @@
 This is a custom component for ESPHome to integrate a smartmeter provided by Wiener Netze into Home Assistant via the infrared "Kundenschnittstelle". It gives power and energy readings, both positive and negative for active as well as reactive power.
 
 ## Device Support
-The project is only named after the IM150 because that was the first smartmeter that was suppported.
-Below is an overview of currently supported devices:
 
 **Supported and tested**
 - Siemens IM150
@@ -21,7 +19,7 @@ Below is an overview of currently supported devices:
 **Currently unsupported**
 - Any other smart meter you might have
 
-If you have one of the untested or unsupported devices (or any other devices supplied by Wiener Netze) and are willing to help me test this component, please open an [issue](https://github.com/bernikr/esphome-wienernetze-im150-smartmeter/issues/new).
+If you have one of the untested or unsupported devices (or any other devices supplied by Wiener Netze) and are willing to help me test this component, please open an [issue](https://github.com/bernikr/esphome-wienernetze-smartmeter/issues/new).
 
 ## Installation and usage
 
@@ -30,7 +28,7 @@ Dont forget to add your encryption key from the smartmeter website otherwise it 
 
 ```
 external_components:
-  - source: github://bernikr/esphome-wienernetze-im150-smartmeter@v0.1.3-beta.3
+  - source: github://bernikr/esphome-wienernetze-smartmeter@v0.1.3-beta.3
 
 logger:
   baud_rate: 0
@@ -40,11 +38,11 @@ uart:
   rx_pin: 3
   baud_rate: 9600
 
-im150:
+wienernetze:
   key: <enter your key here>
 
 sensor:
-  - platform: im150
+  - platform: wienernetze
     active_energy_pos:
       name: Energy
     active_power_pos:
@@ -63,7 +61,7 @@ sensor:
       name: Reactive Negative Power
 
 text_sensor:
-  - platform: im150
+  - platform: wienernetze
     active_energy_pos:
       name: Energy Raw
     active_energy_neg:

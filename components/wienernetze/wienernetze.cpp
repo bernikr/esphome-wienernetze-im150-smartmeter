@@ -1,16 +1,16 @@
-#include "im150.h"
+#include "wienernetze.h"
 
 namespace esphome
 {
-    namespace im150
+    namespace wienernetze
     {
-        void IM150::dump_config()
+        void WienerNetze::dump_config()
         {
-            ESP_LOGCONFIG(TAG, "IM150 Smartmeter:");
-            ESP_LOGCONFIG(TAG, "  version: %s", IM150_VERSION);
+            ESP_LOGCONFIG(TAG, "WienerNetze Smartmeter:");
+            ESP_LOGCONFIG(TAG, "  version: %s", WienerNetze_VERSION);
         }
 
-        void IM150::loop()
+        void WienerNetze::loop()
         {
             unsigned long currentTime = millis();
 
@@ -30,7 +30,7 @@ namespace esphome
             }
         }
 
-        int IM150::bytes_to_int(uint8_t bytes[], int left, int len)
+        int WienerNetze::bytes_to_int(uint8_t bytes[], int left, int len)
         {
             int result = 0;
             for (unsigned int i = left; i < left + len; i++)
@@ -40,7 +40,7 @@ namespace esphome
             return result;
         }
 
-        void IM150::handle_message(std::vector<uint8_t> msg)
+        void WienerNetze::handle_message(std::vector<uint8_t> msg)
         {
             uint8_t datalen = msg.size();
 
@@ -78,13 +78,13 @@ namespace esphome
                 offset = -2;
                 ESP_LOGW(TAG, "Iskraemeco smartmeter detected, support is untested.");
                 ESP_LOGW(TAG, "Please open a GitHub issue:");
-                ESP_LOGW(TAG, "https://github.com/bernikr/esphome-wienernetze-im150-smartmeter/issues/new");
+                ESP_LOGW(TAG, "https://github.com/bernikr/esphome-wienernetze-smartmeter/issues/new");
             }
             else
             {
                 ESP_LOGW(TAG, "Unknown smartmeter model, support is untested.");
                 ESP_LOGW(TAG, "Please open a GitHub issue and include the following identifier: %s", format_hex_pretty(std::vector<uint8_t>(&msg[14], &msg[14 + 7])).c_str());
-                ESP_LOGW(TAG, "https://github.com/bernikr/esphome-wienernetze-im150-smartmeter/issues/new");
+                ESP_LOGW(TAG, "https://github.com/bernikr/esphome-wienernetze-smartmeter/issues/new");
             }
 
             // CRC Check

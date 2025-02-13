@@ -10,42 +10,42 @@
 #include <AES.h>
 #include <CTR.h>
 
-#define IM150_SENSOR(name)  \
-protected:                  \
-    sensor::Sensor *name{}; \
-                            \
-public:                     \
+#define WIENERNETZE_SENSOR(name) \
+protected:                       \
+    sensor::Sensor *name{};      \
+                                 \
+public:                          \
     void set_##name(sensor::Sensor *name) { this->name = name; }
 
-#define IM150_TEXT_SENSOR(name)      \
-protected:                           \
-    text_sensor::TextSensor *name{}; \
-                                     \
-public:                              \
+#define WIENERNETZE_TEXT_SENSOR(name) \
+protected:                            \
+    text_sensor::TextSensor *name{};  \
+                                      \
+public:                               \
     void set_##name(text_sensor::TextSensor *name) { this->name = name; }
 
 namespace esphome
 {
-    namespace im150
+    namespace wienernetze
     {
-        static const char *IM150_VERSION = "0.1.3-beta.3";
-        static const char *TAG = "im150";
+        static const char *WIENERNETZE_VERSION = "0.1.3-beta.3";
+        static const char *TAG = "wienernetze";
 
-        class IM150 : public Component, public uart::UARTDevice
+        class WienerNetze : public Component, public uart::UARTDevice
         {
-            IM150_SENSOR(active_energy_pos)
-            IM150_SENSOR(active_energy_neg)
-            IM150_SENSOR(reactive_energy_pos)
-            IM150_SENSOR(reactive_energy_neg)
-            IM150_SENSOR(active_power_pos)
-            IM150_SENSOR(active_power_neg)
-            IM150_SENSOR(reactive_power_pos)
-            IM150_SENSOR(reactive_power_neg)
+            WIENERNETZE_SENSOR(active_energy_pos)
+            WIENERNETZE_SENSOR(active_energy_neg)
+            WIENERNETZE_SENSOR(reactive_energy_pos)
+            WIENERNETZE_SENSOR(reactive_energy_neg)
+            WIENERNETZE_SENSOR(active_power_pos)
+            WIENERNETZE_SENSOR(active_power_neg)
+            WIENERNETZE_SENSOR(reactive_power_pos)
+            WIENERNETZE_SENSOR(reactive_power_neg)
 
-            IM150_TEXT_SENSOR(active_energy_pos_raw)
-            IM150_TEXT_SENSOR(active_energy_neg_raw)
-            IM150_TEXT_SENSOR(reactive_energy_pos_raw)
-            IM150_TEXT_SENSOR(reactive_energy_neg_raw)
+            WIENERNETZE_TEXT_SENSOR(active_energy_pos_raw)
+            WIENERNETZE_TEXT_SENSOR(active_energy_neg_raw)
+            WIENERNETZE_TEXT_SENSOR(reactive_energy_pos_raw)
+            WIENERNETZE_TEXT_SENSOR(reactive_energy_neg_raw)
 
         public:
             void dump_config() override;

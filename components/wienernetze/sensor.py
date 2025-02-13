@@ -12,7 +12,7 @@ from esphome.const import (
     UNIT_WATT,
 )
 
-from . import CONF_IM150_ID, IM150_COMPONENT_SCHEMA
+from . import CONF_WIENERNETZE_ID, WIENERNETZE_COMPONENT_SCHEMA
 
 TYPES = {
     "active_energy_pos": sensor.sensor_schema(
@@ -65,11 +65,11 @@ TYPES = {
     ),
 }
 
-CONFIG_SCHEMA = IM150_COMPONENT_SCHEMA.extend({cv.Optional(t): schema for t, schema in TYPES.items()})
+CONFIG_SCHEMA = WIENERNETZE_COMPONENT_SCHEMA.extend({cv.Optional(t): schema for t, schema in TYPES.items()})
 
 
 async def to_code(config):
-    paren = await cg.get_variable(config[CONF_IM150_ID])
+    paren = await cg.get_variable(config[CONF_WIENERNETZE_ID])
 
     for t in TYPES:
         if t in config:
