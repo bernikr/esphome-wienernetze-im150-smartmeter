@@ -28,7 +28,7 @@ Dont forget to add your encryption key from the smartmeter website otherwise it 
 
 ```
 external_components:
-  - source: github://bernikr/esphome-wienernetze-smartmeter@v0.1.3-beta.3
+  - source: github://bernikr/esphome-wienernetze-smartmeter@v1.0.0-beta.1
 
 logger:
   baud_rate: 0
