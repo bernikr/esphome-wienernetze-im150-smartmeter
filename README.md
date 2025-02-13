@@ -16,10 +16,7 @@ This is a custom component for ESPHome to integrate a smartmeter provided by Wie
 - Iskraemeco AM550-TD0
 - Iskraemeco AM550-ED0
 
-**Currently unsupported**
-- Any other smart meter you might have
-
-If you have one of the untested or unsupported devices (or any other devices supplied by Wiener Netze) and are willing to help me test this component, please open an [issue](https://github.com/bernikr/esphome-wienernetze-smartmeter/issues/new).
+If you have one of the untested devices (or any other devices supplied by Wiener Netze) and are willing to help me test this component, please open an [issue](https://github.com/bernikr/esphome-wienernetze-smartmeter/issues/new).
 
 ## Installation and usage
 
@@ -82,7 +79,7 @@ This is not a problem when using the `active_energy_pos` sensor for the energy d
 As an alternative you can use the text_sensors which always result in the full counter of the meter (in Wh not kWh) but using them further would require a bit post processing (probably a template sensor) in Home Assistant in order to use them as proper numeric sensors.
 
 ## Tested Hardware
-This component shoud work on all ESP8266 and ESP32 microcontrollers with an IR read-head attached to them. I used a ready made read-write head with an ESP01s built in that I got for 30€ on [ebay](https://www.ebay.de/itm/296067484432).
+This component shoud work on all ESP8266 and ESP32 microcontrollers with an IR read-head attached to them. I used a ready made read-write head with an ESP01s built in that I got for 30€ on [ebay](https://www.ebay.at/sch/i.html?_nkw=lesekopf+tasmota). If they are advertised to be used with Tasmota, they should work.
 
 ## Thanks
 The following resources were much help in the development of this component:
