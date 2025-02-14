@@ -23,7 +23,7 @@ If you have one of the untested devices (or any other devices supplied by Wiener
 Add the following code to your yaml file.
 Dont forget to add your encryption key from the smartmeter website otherwise it will not work.
 
-```
+```yaml
 external_components:
   - source: github://bernikr/esphome-wienernetze-smartmeter@v1.0.1
 
@@ -76,7 +76,11 @@ All energy sensors roll over every 1000 kWh and start again from 0 due to precis
 (Sensors are always 32bit floats. If the meter is too high the sensor cant update every Wh anymore.)  
 This is not a problem when using the `active_energy_pos` sensor for the energy dashboard in Home Assistant as it is set to `total_increasing` and therefore Home Assistant knows that a drop from 1000 to 0 is a reset of the counter and not a negataive consumption of 1000kWh.
 
-As an alternative you can use the text_sensors which always result in the full counter of the meter (in Wh not kWh) but using them further would require a bit post processing (probably a template sensor) in Home Assistant in order to use them as proper numeric sensors.
+As an alternative you can use the text_sensors which always result in the full counter of the meter (in Wh not kWh). To use them as a numeric sensor in Home Assistant you need to create a Template Sensor that takes the sensor and converts it into a numeric sensor:
+
+```jinja
+{{ states("sensor.energy_raw") | float / 1000 }}
+```
 
 ## Tested Hardware
 This component shoud work on all ESP8266 and ESP32 microcontrollers with an IR read-head attached to them. I used a ready made read-write head with an ESP01s built in that I got for 30€ on [ebay](https://www.ebay.at/sch/i.html?_nkw=lesekopf+tasmota). If they are advertised to be used with Tasmota, they should work.
