@@ -62,22 +62,23 @@ namespace esphome
                 return;
             }
 
+            // Detect smartmeter type and make adjustments
             int offset = 0;
             if (memcmp(&msg[16], "SMSfp", 5) == 0)
             {
-                // Siemens IM150, IM151, IM350, IM351
+                ESP_LOGV(TAG, "Detected Siemens IM150/IM151/IM350/IM351");
             }
             else if (memcmp(&msg[14], "LGZgs", 5) == 0)
             {
-                // Landis+Gyr E450, E570
+                ESP_LOGV(TAG, "Detected Landis+Gyr E450/E570");
                 offset = -2;
             }
             else if (memcmp(&msg[14], "ISKhu", 5) == 0)
             {
-                // Iskraemeco AM550-TD0, AM550-ED0
+                ESP_LOGW(TAG, "Detected Iskraemeco AM550-TD0/AM550-ED0"); // change to LOGV when supported
                 offset = -2;
-                ESP_LOGW(TAG, "Iskraemeco smartmeter detected, support is untested.");
-                ESP_LOGW(TAG, "Please open a GitHub issue:");
+                ESP_LOGW(TAG, "Support for this smartmeter is untested.");
+                ESP_LOGW(TAG, "Please open a GitHub issue to report success or failure:");
                 ESP_LOGW(TAG, "https://github.com/bernikr/esphome-wienernetze-smartmeter/issues/new");
             }
             else
